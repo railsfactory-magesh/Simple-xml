@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xmlpull.v1.XmlSerializer;
-import mag.simple.xml.DomFeedParser;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -27,12 +26,12 @@ public class MessageList extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.main);
-        loadFeed(ParserType.ANDROID_SAX);
+        loadFeed();
     }
     
 
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		super.onMenuItemSelected(featureId, item);
@@ -44,7 +43,7 @@ public class MessageList extends ListActivity {
 		}
 		this.loadFeed(type);
 		return true;
-	}
+	}*/
 
     
 	@Override
@@ -55,16 +54,16 @@ public class MessageList extends ListActivity {
 		this.startActivity(viewMessage);
 	}
 
-	private void loadFeed(ParserType type){
+	private void loadFeed(){
     	try{
-    		Log.i("AndroidNews", "ParserType="+type.name());
+    		Log.i("GeexHQ News", "ParserType= DOM");
 	    	FeedParser parser = new DomFeedParser(feedUrl);
 	    	long start = System.currentTimeMillis();
 	    	messages = parser.parse();
 	    	long duration = System.currentTimeMillis() - start;
-	    	Log.i("AndroidNews", "Parser duration=" + duration);
+	    	Log.i("GeexHQ News", "Parser duration=" + duration);
 	    	String xml = writeXml();
-	    	Log.i("AndroidNews", xml);
+	    	Log.i("GeexHQ News", xml);
 	    	List<String> titles = new ArrayList<String>(messages.size());
 	    	for (Message msg : messages){
 	    		titles.add(msg.getTitle());
@@ -73,7 +72,7 @@ public class MessageList extends ListActivity {
 	    		new ArrayAdapter<String>(this, R.layout.row,titles);
 	    	this.setListAdapter(adapter);
     	} catch (Throwable t){
-    		Log.e("AndroidNews",t.getMessage(),t);
+    		Log.e("GeexHQ News",t.getMessage(),t);
     	}
     }
     
