@@ -54,6 +54,7 @@ public class MessageList extends ListActivity {
 		this.startActivity(viewMessage);
 	}
 
+	// This function is used to print to the Log or the android stacktrace
 	private void loadFeed(){
     	try{
     		Log.i("GeexHQ News", "ParserType= DOM");
